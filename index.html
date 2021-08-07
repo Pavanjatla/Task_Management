@@ -31,7 +31,7 @@
               <input type="url" class="form-control" placeholder="http//:www.images.jpg" id="imageUrl">
             </div>
             <div class="mb-3">
-              <label for="taskTitle" class="form-label">Task Tile </label>
+              <label for="taskTitle" class="form-label">Task Title </label>
               <input type="text" class="form-control" placeholder="web development" id="taskTitle">
             </div>
             <div class="mb-3">
@@ -45,7 +45,7 @@
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary">Save changes</button>
+            <button type="button" class="btn btn-primary" data-bs-dismiss="modal" onclick="addNewCard()">Save changes</button>
           </div>
         </div>
       </div>
@@ -89,33 +89,7 @@
             </div>
         </section>
 
-        <section class="row">
-          <div class="col-md-6 col-lg-4 my-5">
-
-            <div class="card">
-              <div class="card-header gap-2 d-flex justify-content-end">
-                <button class="btn btn-outline-info">
-                  <i class="fas fa-pencil-alt"></i>
-                </button>
-                <button class="btn btn-outline-danger">
-                  <i class="fas fa-trash-alt"></i>
-                </button>
-                
-              </div>
-              <div class="card-body">
-                <img src="https://analyticsindiamag.com/wp-content/uploads/2020/10/7d744a684fe03ebc7e8de545f97739dd.jpg" alt="image"
-                class="card-img">
-                <h5 class="card-title">Special title treatment</h5>
-                <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                 <span class="badge bg-primary">Badge</span>
-              </div>
-              <div class="card-footer">
-                <button class="btn btn-outline-primary">Open Task</button>
-                
-              </div>
-            </div>
-
-          </div>
+        <section class="task_container row">
 
         </section>
     </main>
@@ -127,5 +101,7 @@
 
     <!-- JavaScript Bundle with Popper -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj" crossorigin="anonymous"></script>
+
+    <script src="index.js"></script>
 </body>
 </html>
