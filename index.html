@@ -15,13 +15,47 @@
 
     <title>Task Management</title>
 </head>
-<body>
+<body style="background-color: aliceblue;">
+
+      <!-- Modal -->
+    <div class="modal fade" id="newTask" tabindex="-1" aria-labelledby="newTaskLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="newTaskLabel">Modal title</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <div class="mb-3">
+              <label for="imageUrl" class="form-label">Image Url</label>
+              <input type="url" class="form-control" placeholder="http//:www.images.jpg" id="imageUrl">
+            </div>
+            <div class="mb-3">
+              <label for="taskTitle" class="form-label">Task Tile </label>
+              <input type="text" class="form-control" placeholder="web development" id="taskTitle">
+            </div>
+            <div class="mb-3">
+              <label for="taskType" class="form-label">Task Type</label>
+              <input type="text" class="form-control" placeholder="practice" id="taskType">
+            </div>
+            <div class="mb-3">
+              <label for="taskDesc" class="form-label">Task Description</label>
+              <textarea type="text" class="form-control" placeholder="Dom Manipulation" rows="6" id="taskDesc"></textarea>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary">Save changes</button>
+          </div>
+        </div>
+      </div>
+    </div>
     <header>
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light shadow">
             <div class="container-fluid">
               <a class="fs-3 fw-bolder" href="#">Task Creater</a>
               <button class="navbar-toggler" type="button"
-            data-bs-toggle="collapse" 
+              data-bs-toggle="collapse" 
               data-bs-target="#navbarSupportedContent" 
               aria-controls="navbarSupportedContent" 
               aria-expanded="false" 
@@ -34,7 +68,7 @@
                     <a class="nav-link active" aria-current="page" href="#">Home</a>
                   </li>
                 </ul>
-                <button class="btn btn-primary" type="button"> 
+                <button class="btn btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#newTask"> 
                     <i class="fas fa-plus"></i>
                     Add New
 
@@ -47,12 +81,42 @@
     <main class="container">
         <section class="row justify-content-center mt-5">
             <div class="col-md-8 col-lg-6">
-                <div class="input-group mb-3">
+                <div class="input-group mb-3 shadow">
                     
                     <input type="search" class="form-control" placeholder="search task" aria-label="search task" aria-describedby="basic-addon1">
                     <span class="input-group-text" id="basic-addon1"><i class="fas fa-search"></i></span>
                   </div>
             </div>
+        </section>
+
+        <section class="row">
+          <div class="col-md-6 col-lg-4 my-5">
+
+            <div class="card">
+              <div class="card-header gap-2 d-flex justify-content-end">
+                <button class="btn btn-outline-info">
+                  <i class="fas fa-pencil-alt"></i>
+                </button>
+                <button class="btn btn-outline-danger">
+                  <i class="fas fa-trash-alt"></i>
+                </button>
+                
+              </div>
+              <div class="card-body">
+                <img src="https://analyticsindiamag.com/wp-content/uploads/2020/10/7d744a684fe03ebc7e8de545f97739dd.jpg" alt="image"
+                class="card-img">
+                <h5 class="card-title">Special title treatment</h5>
+                <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+                 <span class="badge bg-primary">Badge</span>
+              </div>
+              <div class="card-footer">
+                <button class="btn btn-outline-primary">Open Task</button>
+                
+              </div>
+            </div>
+
+          </div>
+
         </section>
     </main>
     
