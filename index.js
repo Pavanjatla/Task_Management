@@ -11,8 +11,8 @@ const generateHtml = (taskData) =>
         <button class="btn btn-outline-info">
           <i class="fas fa-pencil-alt"></i>
         </button>
-        <button class="btn btn-outline-danger">
-          <i class="fas fa-trash-alt"></i>
+        <button class="btn btn-outline-danger" name=${taskData.id} onClick="deleteCard.apply(this, arguments)">
+          <i class="fas fa-trash-alt" name=${taskData.id}></i>
         </button>
         
       </div>
@@ -33,6 +33,8 @@ const generateHtml = (taskData) =>
 
 const insertDom = (content) => taskContainer.insertAdjacentHTML("beforeend",content);
 
+const saveToLocalStorage = () =>  localStorage.setItem("taskyCA",JSON.stringify({ card : globalTaskData }));
+
 
 const addNewCard = () =>{
     const taskData={
@@ -45,7 +47,7 @@ const addNewCard = () =>{
 
     globalTaskData.push(taskData);
 
-    localStorage.setItem("taskyCA",JSON.stringify({ card : globalTaskData }));
+    saveToLocalStorage();
 
     const newCard = generateHtml(taskData);
     insertDom(newCard);
@@ -82,5 +84,28 @@ const loadCards=() => {
   });
   return;
 
+
+};
+
+const deleteCard = (event) => {
+  const targetID =event.target.getAttribute("name");
+  const elementType = event.target.tagName;
+
+  const removeTask = globalTaskData.filter((task) => task.id!==targetID);
+  globalTaskData=removeTask;
+
+
+  saveToLocalStorage();
+
+  if(elementType=== "BUTTON")
+  {
+    return taskContainer.removeChild(
+      event.target.parentNode.parentNode.parentNode
+    );
+  } else {
+    return taskContainer.removeChild(
+      event.target.parentNode.parentNode.parentNode.parentNode
+    );
+  }
 
 };
