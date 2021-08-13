@@ -8,8 +8,8 @@ const generateHtml = (taskData) =>
 
     <div class="card">
       <div class="card-header gap-2 d-flex justify-content-end">
-        <button class="btn btn-outline-info">
-          <i class="fas fa-pencil-alt"></i>
+        <button class="btn btn-outline-info"  name=${taskData.id} onClick="editCard.apply(this, arguments)">
+          <i class="fas fa-pencil-alt"  name=${taskData.id}></i>
         </button>
         <button class="btn btn-outline-danger" name=${taskData.id} onClick="deleteCard.apply(this, arguments)">
           <i class="fas fa-trash-alt" name=${taskData.id}></i>
@@ -24,7 +24,7 @@ const generateHtml = (taskData) =>
          <span class="badge bg-primary">${taskData.Type}</span>
       </div>
       <div class="card-footer">
-        <button class="btn btn-outline-primary">Open Task</button> 
+        <button class="btn btn-outline-primary" name=${taskData.id} >Open Task</button> 
       </div>
     </div>
 
@@ -108,4 +108,83 @@ const deleteCard = (event) => {
     );
   }
 
+};
+
+const editCard =(event) =>{
+
+  const elementType = event.target.tagName;
+
+  let taskTitle;
+  let taskType;
+  let taskDesc;
+  let parentElement;
+  let submitButton;
+
+  if (elementType === "BUTTON")
+  {
+    parentElement=event.target.parentNode.parentNode;
+  } else {
+    parentElement = event.target.parentNode.parentNode.parentNode;
+  }
+
+  taskTitle=parentElement.childNodes[3].childNodes[3];
+  taskType=parentElement.childNodes[3].childNodes[7];
+  taskDesc=parentElement.childNodes[3].childNodes[5];
+  submitButton=parentElement.childNodes[5].childNodes[1];
+  console.log(submitButton);
+
+  taskTitle.setAttribute("contenteditable","true");
+  taskType.setAttribute("contenteditable","true");
+  taskDesc.setAttribute("contenteditable","true");
+  submitButton.setAttribute("onClick","saveEdit.apply(this, arguments)");
+  submitButton.innerHTML="Save Changes";
+
+
+};
+
+
+const saveEdit=(event) => {
+  const targetID =event.target.getAttribute("name");
+  const elementType = event.target.tagName;
+
+  let parentElement;
+
+  if (elementType === "BUTTON")
+  {
+    parentElement=event.target.parentNode.parentNode;
+  } else {
+    parentElement = event.target.parentNode.parentNode.parentNode;
+  }
+
+ const taskTitle=parentElement.childNodes[3].childNodes[3];
+ const taskType=parentElement.childNodes[3].childNodes[7];
+ const taskDesc=parentElement.childNodes[3].childNodes[5];
+ const submitButton=parentElement.childNodes[5].childNodes[1];
+
+ const updatedData={
+   title:taskTitle.innerHTML,
+   Description:taskDesc.innerHTML,
+   Type:taskType.innerHTML,
+ };
+
+ const updateGlobalTask=globalTaskData.map((task) =>{
+
+  if(task.id === targetID){
+    return {...task , ...updatedData };
+  }
+  return task;
+ });
+
+ globalTaskData=updateGlobalTask;
+
+ saveToLocalStorage();
+
+  taskTitle.setAttribute("contenteditable","false");
+  taskType.setAttribute("contenteditable","false");
+  taskDesc.setAttribute("contenteditable","false");
+
+  submitButton.innerHTML="Open Task";
+
+
+  
 };
