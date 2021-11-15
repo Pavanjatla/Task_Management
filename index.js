@@ -1,4 +1,6 @@
 const taskContainer=document.querySelector(".task_container")
+const modalContainer=document.querySelector(".modal-container")
+//const searchBar = document.getElementById("searchBar");
 let globalTaskData=[];
 
 
@@ -24,14 +26,41 @@ const generateHtml = (taskData) =>
          <span class="badge bg-primary">${taskData.Type}</span>
       </div>
       <div class="card-footer">
-        <button class="btn btn-outline-primary" name=${taskData.id} >Open Task</button> 
+        <button class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#openTask" name=${taskData.id} onClick="openTask.apply(this, arguments)">Open Task</button> 
       </div>
     </div>
 
   </div>`;
 
+  const taskDetails= (taskData) =>
+  {
+    const date = new Date(parseInt(taskData.id));
+    return `<div class="modal fade" id="openTask" tabindex="-1" aria-labelledby="newTaskLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="newTaskLabel">Task Details</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+        <img src=${taskData.Image} alt="image"
+        class="card-img">
+        <p>Created on ${date.toDateString()}</p>
+        <h5 class="card-title">${taskData.title}</h5>
+        <p class="card-text">${taskData.Description}</p>
+         <span class="badge bg-primary">${taskData.Type}</span>
+    
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>`;
+};
 
 const insertDom = (content) => taskContainer.insertAdjacentHTML("beforeend",content);
+const insertModal = (content) => modalContainer.insertAdjacentHTML("beforeend",content);
 
 const saveToLocalStorage = () =>  localStorage.setItem("taskyCA",JSON.stringify({ card : globalTaskData }));
 
@@ -182,9 +211,32 @@ const saveEdit=(event) => {
   taskTitle.setAttribute("contenteditable","false");
   taskType.setAttribute("contenteditable","false");
   taskDesc.setAttribute("contenteditable","false");
-
   submitButton.innerHTML="Open Task";
-
-
-  
 };
+
+
+const openTask=(event) =>{
+  const targetID =event.target.getAttribute("name");
+  const getTask = globalTaskData.filter((task) => task.id === targetID);
+  modalContainer.innerHTML = taskDetails(getTask[0]);
+};
+
+const searchTask = (e) => {
+  if (!e) e = window.event;
+  while (taskContainer.firstChild) {
+    taskContainer.removeChild(taskContainer.firstChild);
+  }
+
+  const resultData =globalTaskData.filter(({ title }) =>
+    title.includes(e.target.value)
+  );
+
+  resultData.map((cardData) => {
+    //taskContents.insertAdjacentHTML("beforeend", htmlTaskContent(cardData));
+    const filteredData = generateHtml(cardData);
+    insertDom(filteredData);
+  });
+};
+
+
+
